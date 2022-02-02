@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productSelectors, getProducts } from '../features/ProductSlice'
+import { productSelectors, getProducts, deleteProducts } from '../features/ProductSlice'
 import { Link } from 'react-router-dom'
 
 const ShowProduct = () => {
@@ -29,7 +29,7 @@ const ShowProduct = () => {
                             <td>{products.price}</td>
                             <td>
                                 <Link to={`edit/${products.id}`} className="button is-info is-small">Edit</Link>
-                                <button className="button is-danger is-small">Delete</button>
+                                <button onClick={() => dispatch(deleteProducts(products.id))} className="button is-danger is-small">Delete</button>
                             </td>
                         </tr>
                     ))}

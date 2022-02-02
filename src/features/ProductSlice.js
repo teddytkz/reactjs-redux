@@ -13,6 +13,13 @@ export const saveProducts = createAsyncThunk('products/saveProducts', async ({ t
     return response.data
 })
 
+export const updateProducts = createAsyncThunk('products/updateProducts', async ({ id, title, price }) => {
+    const response = await axios.patch(`http://localhost:5000/product/${id}`, {
+        title, price
+    })
+    return response.data
+})
+
 export const deleteProducts = createAsyncThunk('products/deleteProducts', async (id) => {
     await axios.delete(`http://localhost:5000/product/${id}`)
     return id
@@ -34,6 +41,9 @@ const productSlice = createSlice({
         },
         [deleteProducts.fulfilled]: (state, action) => {
             productEntity.removeOne(state, action.payload)
+        },
+        [updateProducts.fulfilled]: (state, action) => {
+            productEntity.updateOne(state, { id: action.payload.id, updates: action.payload })
         }
     }
 })
